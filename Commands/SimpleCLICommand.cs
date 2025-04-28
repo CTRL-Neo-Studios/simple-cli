@@ -1,0 +1,16 @@
+namespace SimpleCLI.Commands;
+
+public abstract class SimpleCLICommand
+{
+    public abstract string Name { get; }
+    public virtual string Description { get; } = "No description available";
+    public virtual string Usage { get; } = "";
+    public virtual string[] Aliases { get; } = Array.Empty<string>();
+    
+    public abstract void Execute(SimpleCLIArgs args, SimpleCLIParser context);
+    
+    public virtual string[] GetAutoCompleteSuggestions(int argIndex, string input)
+    {
+        return Array.Empty<string>();
+    }
+}
