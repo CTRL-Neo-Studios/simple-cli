@@ -1,10 +1,10 @@
 namespace SimpleCLI.Commands.Builtin;
 
-public class HistoryCommand : SimpleCLICommand
+public class HistoryCommand : SimpleCliCommand
 {
-    private readonly SimpleCLIParser _parser;
+    private readonly SimpleCliParser _parser;
     
-    public HistoryCommand(SimpleCLIParser parser)
+    public HistoryCommand(SimpleCliParser parser)
     {
         _parser = parser;
     }
@@ -12,7 +12,7 @@ public class HistoryCommand : SimpleCLICommand
     public override string Name => "history";
     public override string Description => "Displays command history";
     
-    public override void Execute(SimpleCLIArgs args, SimpleCLIParser context)
+    public override void Execute(SimpleCliArgs args, SimpleCliParser context)
     {
         if (_parser.CommandHistory.Count == 0)
         {

@@ -1,6 +1,6 @@
 namespace SimpleCLI.Exceptions;
 
-public class SimpleCLIException : Exception
+public class SimpleCliException : Exception
 {
-    public SimpleCLIException(string message) : base(message) { }
+    public SimpleCliException(string message) : base(message) { }
 }

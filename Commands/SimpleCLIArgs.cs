@@ -1,6 +1,6 @@
 namespace SimpleCLI.Commands;
 
-public class SimpleCLIArgs
+public class SimpleCliArgs
 {
     public List<string> Arguments { get; } = new List<string>();
     public Dictionary<string, string> Flags { get; } = new Dictionary<string, string>();

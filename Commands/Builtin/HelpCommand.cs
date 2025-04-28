@@ -2,11 +2,11 @@ using SimpleCLI.Exceptions;
 
 namespace SimpleCLI.Commands.Builtin;
 
-public class HelpCommand : SimpleCLICommand
+public class HelpCommand : SimpleCliCommand
 {
-    private readonly SimpleCLIParser _parser;
+    private readonly SimpleCliParser _parser;
     
-    public HelpCommand(SimpleCLIParser parser)
+    public HelpCommand(SimpleCliParser parser)
     {
         _parser = parser;
     }
@@ -15,13 +15,13 @@ public class HelpCommand : SimpleCLICommand
     public override string Description => "Displays help information";
     public override string Usage => "help [command]";
     
-    public override void Execute(SimpleCLIArgs args, SimpleCLIParser context)
+    public override void Execute(SimpleCliArgs args, SimpleCliParser context)
     {
         if (args.Arguments.Count == 0)
         {
             // List all commands
             context.Output("Available commands:");
-            foreach (SimpleCLICommand cmd in _parser.Commands.Values.Distinct().OrderBy(c => c.Name))
+            foreach (SimpleCliCommand cmd in _parser.Commands.Values.Distinct().OrderBy(c => c.Name))
             {
                 context.Output($"  {cmd.Name.PadRight(15)} - {cmd.Description}");
             }
@@ -31,7 +31,7 @@ public class HelpCommand : SimpleCLICommand
         {
             // Show help for specific command
             string commandName = args[0].ToLower();
-            if (_parser.Commands.TryGetValue(commandName, out SimpleCLICommand command))
+            if (_parser.Commands.TryGetValue(commandName, out SimpleCliCommand command))
             {
                 context.Output($"{command.Name} - {command.Description}");
                 context.Output($"Usage: {command.Usage}");
@@ -41,7 +41,7 @@ public class HelpCommand : SimpleCLICommand
             }
             else
             {
-                throw new SimpleCLIException($"Command not found: {commandName}");
+                throw new SimpleCliCommandException($"Command not found: {commandName}");
             }
         }
     }

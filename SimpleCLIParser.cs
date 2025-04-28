@@ -8,25 +8,25 @@ namespace SimpleCLI;
 /// <summary>
 /// Main CLI command processor with parsing and execution capabilities
 /// </summary>
-public class SimpleCLIParser
+public class SimpleCliParser
 {
-    private Dictionary<string, SimpleCLICommand> _commands = new Dictionary<string, SimpleCLICommand>();
+    private Dictionary<string, SimpleCliCommand> _commands = new Dictionary<string, SimpleCliCommand>();
     private List<string> _commandHistory = new List<string>();
     private int _historyIndex = -1;
     
-    public IReadOnlyDictionary<string, SimpleCLICommand> Commands => _commands;
+    public IReadOnlyDictionary<string, SimpleCliCommand> Commands => _commands;
     public IReadOnlyList<string> CommandHistory => _commandHistory.AsReadOnly();
     
     // Events
-    public event Action<string> OnOutput;
-    public event Action<string> OnError;
+    public event Action<string>? OnOutput;
+    public event Action<string>? OnError;
     
     // Settings
     public string Prompt { get; set; } = "> ";
     public int MaxHistorySize { get; set; } = 50;
     public bool EchoCommands { get; set; } = true;
     
-    public SimpleCLIParser()
+    public SimpleCliParser()
     {
         // Register built-in commands
         RegisterCommand(new HelpCommand(this));
@@ -37,11 +37,11 @@ public class SimpleCLIParser
     /// <summary>
     /// Register a new command
     /// </summary>
-    public void RegisterCommand(SimpleCLICommand command)
+    public void RegisterCommand(SimpleCliCommand command)
     {
         if (_commands.ContainsKey(command.Name.ToLower()))
         {
-            // Debug.LogWarning($"Command '{command.Name}' is already registered");
+            throw new SimpleCliCommandRegisterException($"Command already registered: {command.Name}");
             return;
         }
         
@@ -78,7 +78,7 @@ public class SimpleCLIParser
         {
             ParseAndExecute(commandLine);
         }
-        catch (SimpleCLIException ex)
+        catch (SimpleCliException ex)
         {
             Error(ex.Message);
         }
@@ -98,11 +98,11 @@ public class SimpleCLIParser
         string commandName = tokens[0].ToLower();
         tokens.RemoveAt(0);
         
-        if (!_commands.TryGetValue(commandName, out SimpleCLICommand command))
-            throw new SimpleCLIException($"Command not found: {commandName}");
+        if (!_commands.TryGetValue(commandName, out SimpleCliCommand command))
+            throw new SimpleCliNullCommandException($"Command not found: {commandName}");
         
         // Parse arguments
-        var args = new SimpleCLIArgs();
+        var args = new SimpleCliArgs();
         var flagMode = false;
         string currentFlag = null;
         
@@ -212,7 +212,7 @@ public class SimpleCLIParser
         {
             // Argument completion (delegate to command)
             string commandName = parts[0].ToLower();
-            if (_commands.TryGetValue(commandName, out SimpleCLICommand command))
+            if (_commands.TryGetValue(commandName, out SimpleCliCommand command))
             {
                 return command.GetAutoCompleteSuggestions(parts.Length - 2, parts.Last());
             }

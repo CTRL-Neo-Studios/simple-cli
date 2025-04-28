@@ -7,11 +7,11 @@ An extremely simple CLI building tool for CSharp projects.
 ### Parsing
 
 ```csharp
-// Registering and using commands:
+// Registering and using commands
 var parser = new SimpleCLIParser();
 parser.RegisterCommand(new MyCustomCommand());
 
-// Execute commands:
+// Execute commands
 parser.Execute("echo Hello World --color green");
 parser.Execute("help echo");
 ```
