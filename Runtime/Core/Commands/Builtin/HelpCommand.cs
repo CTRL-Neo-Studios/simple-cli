@@ -1,7 +1,7 @@
 using System.Linq;
-using SimpleCLI.Core.Exceptions;
+using SimpleCLI.Runtime.Core.Exceptions;
 
-namespace SimpleCLI.Core.Commands.Builtin
+namespace SimpleCLI.Runtime.Core.Commands.Builtin
 {
     public class HelpCommand : SimpleCliCommand
     {
