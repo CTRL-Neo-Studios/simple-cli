@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleCLI.Core.Commands;
-using SimpleCLI.Core.Commands.Builtin;
-using SimpleCLI.Core.Exceptions;
+using SimpleCLI.Runtime.Commands;
+using SimpleCLI.Runtime.Commands.Builtin;
+using SimpleCLI.Runtime.Exceptions;
 
-namespace SimpleCLI.Core
+namespace SimpleCLI.Runtime
 {
     /// <summary>
     /// Main CLI command processor with parsing and execution capabilities

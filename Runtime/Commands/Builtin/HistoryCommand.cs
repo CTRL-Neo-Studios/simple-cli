@@ -1,4 +1,4 @@
-namespace SimpleCLI.Core.Commands.Builtin
+namespace SimpleCLI.Runtime.Commands.Builtin
 {
     public class HistoryCommand : SimpleCliCommand
     {

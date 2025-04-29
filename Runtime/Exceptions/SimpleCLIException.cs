@@ -1,6 +1,6 @@
 using System;
 
-namespace SimpleCLI.Core.Exceptions
+namespace SimpleCLI.Runtime.Exceptions
 {
     public class SimpleCliException : Exception
     {

@@ -1,4 +1,4 @@
-namespace SimpleCLI.Core.Exceptions
+namespace SimpleCLI.Runtime.Exceptions
 {
     public class SimpleCliParserException : SimpleCliException
     {
