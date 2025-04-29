@@ -224,7 +224,7 @@ namespace SimpleCLI.Runtime.Core
         }
     
         // Output methods
-        public void Output(string message) => OnOutput?.Invoke(message, 0.0f, 0.0f, 1.0f, 0.0f);
+        public void Output(string message) => OnOutput?.Invoke(message, 1.0f, 0.0f, 1.0f, 0.0f);
         public void Output(string message, float a, float r, float g, float b) => OnOutput?.Invoke(message, a, r, g, b);
         public void Error(string message) => OnError?.Invoke($"Error: {message}");
     }
