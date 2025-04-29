@@ -1,6 +1,6 @@
 using System;
 
-namespace SimpleCLI.Runtime.Commands
+namespace SimpleCLI.Core.Commands
 {
     public abstract class SimpleCliCommand
     {

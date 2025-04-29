@@ -1,4 +1,4 @@
-namespace SimpleCLI.Runtime.Exceptions
+namespace SimpleCLI.Core.Exceptions
 {
     public class SimpleCliNullCommandException : SimpleCliException
     {

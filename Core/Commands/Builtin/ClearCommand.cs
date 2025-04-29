@@ -1,4 +1,4 @@
-namespace SimpleCLI.Runtime.Commands.Builtin
+namespace SimpleCLI.Core.Commands.Builtin
 {
     public class ClearCommand : SimpleCliCommand
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SimpleCLI.Runtime.Commands
+namespace SimpleCLI.Core.Commands
 {
     public class SimpleCliArgs
     {
