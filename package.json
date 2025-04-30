@@ -1,6 +1,6 @@
 {
   "name": "dev.ctrl-neo.simple-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A very, very simple tool for building command line interfaces.",
   "author": "CTRl Neo Studios",
   "license": "MIT",

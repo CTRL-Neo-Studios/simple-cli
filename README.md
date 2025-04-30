@@ -4,6 +4,10 @@ An extremely simple CLI building tool for CSharp projects.
 
 ## Usage
 
+### Modules
+
+Please check the [Modules Document](Modules.md).
+
 ### Parsing
 
 ```csharp
