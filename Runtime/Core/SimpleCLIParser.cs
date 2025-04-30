@@ -4,6 +4,8 @@ using System.Linq;
 using SimpleCLI.Runtime.Core.Commands;
 using SimpleCLI.Runtime.Core.Commands.Builtin;
 using SimpleCLI.Runtime.Core.Exceptions;
+using SimpleCLI.Runtime.Core.Modules.Interfaces;
+using SimpleCLI.Runtime.Core.Utility;
 
 namespace SimpleCLI.Runtime.Core
 {
@@ -12,21 +14,26 @@ namespace SimpleCLI.Runtime.Core
     /// </summary>
     public class SimpleCliParser
     {
-        private Dictionary<string, SimpleCliCommand> _commands = new Dictionary<string, SimpleCliCommand>();
-        private List<string> _commandHistory = new List<string>();
+        private Dictionary<string, SimpleCliCommand> _commands = new();
+        private List<string> _commandHistory = new();
         private int _historyIndex = -1;
-    
+        private Dictionary<string, string> _kvData = new();
+        private List<ISimpleCliModule> _modules = new List<ISimpleCliModule>();
+
         public IReadOnlyDictionary<string, SimpleCliCommand> Commands => _commands;
         public IReadOnlyList<string> CommandHistory => _commandHistory.AsReadOnly();
-    
+        public IReadOnlyDictionary<string, string> KvData => _kvData;
+        public IReadOnlyList<ISimpleCliModule> Modules => _modules.AsReadOnly();
+
         // Events
-        public event Action<string, float, float, float, float>? OnOutput; // the float stores the argb value.
+        public event Action<string, SimpleCliColor>? OnOutput; // the float stores the argb value.
         public event Action<string>? OnError;
     
         // Settings
         public string Prompt { get; set; } = "> ";
         public int MaxHistorySize { get; set; } = 50;
         public bool EchoCommands { get; set; } = true;
+        public SimpleCliColor DefaultColor { get; set; } = new("#00FF00");
     
         public SimpleCliParser()
         {
@@ -34,6 +41,32 @@ namespace SimpleCLI.Runtime.Core
             RegisterCommand(new HelpCommand(this));
             RegisterCommand(new ClearCommand());
             RegisterCommand(new HistoryCommand(this));
+        }
+
+        public void AddKeyValueData(string key, string value) => _kvData.Add(key, value);
+        public void RemoveKeyValueData(string key) => _kvData.Remove(key);
+        public bool HasKeyValueDataKey(string key) => _kvData.ContainsKey(key);
+        public bool HasKeyValueDataValue(string value) => _kvData.ContainsValue(value);
+        
+        public void RegisterModule(ISimpleCliModule module)
+        {
+            if (_modules.Any(m => m.Name == module.Name))
+            {
+                throw new SimpleCliCommandRegisterException($"Module already registered: {module.Name}");
+            }
+    
+            _modules.Add(module);
+            module.Initialize(this);
+        }
+
+        public void UnregisterModule(string moduleName)
+        {
+            var module = _modules.FirstOrDefault(m => m.Name == moduleName);
+            if (module != null)
+            {
+                module.Shutdown();
+                _modules.Remove(module);
+            }
         }
     
         /// <summary>
@@ -224,8 +257,8 @@ namespace SimpleCLI.Runtime.Core
         }
     
         // Output methods
-        public void Output(string message) => OnOutput?.Invoke(message, 1.0f, 0.0f, 1.0f, 0.0f);
-        public void Output(string message, float a, float r, float g, float b) => OnOutput?.Invoke(message, a, r, g, b);
+        public void Output(string message) => OnOutput?.Invoke(message, DefaultColor);
+        public void Output(string message, SimpleCliColor color) => OnOutput?.Invoke(message, color);
         public void Error(string message) => OnError?.Invoke($"Error: {message}");
     }
 }

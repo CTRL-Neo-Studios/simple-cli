@@ -11,7 +11,8 @@ namespace SimpleCLI.Runtime.Core.Commands.Builtin
     
         public override string Name => "history";
         public override string Description => "Displays command history";
-    
+        public override string Usage => "history";
+
         public override void Execute(SimpleCliArgs args, SimpleCliParser context)
         {
             if (_parser.CommandHistory.Count == 0)
